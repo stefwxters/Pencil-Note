@@ -133,11 +133,11 @@
 
     <!-- Service Worker for Offline Support -->
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('Service Worker Registered'))
-                .catch(err => console.log('Service Worker Error:', err));
-        }
+       if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/Pencil-Note/sw.js') // Adjust path based on your repo structure
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.log('Service Worker Error:', err));
+}
     </script>
 </body>
 </html>
