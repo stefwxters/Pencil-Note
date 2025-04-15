@@ -1,12 +1,12 @@
 const CACHE_NAME = 'goal-tracker-v1';
 const urlsToCache = [
   '/',
-  'Pencil-Note/index.html',
-  'Pencil-Note/styles.css',
-  'Pencil-Note/app.js',
-  'Pencil-Note/manifest.json',
-  'Pencil-Note/icons/icon-192.png',
-  'Pencil-Note/icons/icon-512.png'
+  'index.html',
+  'styles.css',
+  'app.js',
+  'manifest.json',
+  'icons/icon-192.png',
+  'icons/icon-512.png'
 ];
 
 // Install service worker and cache assets
