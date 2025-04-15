@@ -1,145 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pencil Note - A fast, simple note-taking app">
-    <title>Pencil Note</title>
-    <link rel="manifest" href="/Pencil-Note/manifest.json">
-    <link rel="icon" type="image/png" sizes="512x512" href="/Pencil-Note/icon-192x192.png">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .note-list, .note-editor { display: grid; gap: 10px; }
-        .note-item { padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 5px 10px; cursor: pointer; }
-        input, textarea { width: 100%; padding: 5px; }
-        #searchBar { margin-bottom: 20px; }
-        .hidden { display: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your goals or habits to stay motivated with this engaging habit tracker.">
+  <meta name="theme-color" content="#4CAF50">
+  <title>Goal & Habit Tracker</title>
+  <link rel="manifest" href="Pencil-Note/manifest.json">
+  <link rel="stylesheet" href="Pencil-Note/styles.css">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="Pencil-Note/icons/icon-192.png">
 </head>
 <body>
-    <h1>Pencil Note</h1>
-    
-    <!-- Search and Filter -->
-    <input type="text" id="searchBar" placeholder="Search notes..." onkeyup="searchNotes()">
-    
-    <!-- Note List -->
-    <div id="noteList" class="note-list"></div>
-    
-    <!-- Note Editor -->
-    <div id="noteEditor" class="note-editor hidden">
-        <input type="text" id="noteTitle" placeholder="Note Title">
-        <textarea id="noteContent" rows="5" placeholder="Write your note here..."></textarea>
-        <input type="text" id="noteCategory" placeholder="Category (e.g., Work, Personal)">
-        <button onclick="saveNote()">Save Note</button>
-        <button onclick="cancelEdit()">Cancel</button>
-    </div>
-    
-    <button onclick="showEditor()">New Note</button>
-
-    <script>
-        let notes = JSON.parse(localStorage.getItem('notes')) || [];
-        let editingId = null;
-
-        // Load notes on page load
-        window.onload = () => displayNotes();
-
-        function displayNotes(filter = '') {
-            const noteList = document.getElementById('noteList');
-            noteList.innerHTML = '';
-            notes
-                .filter(note => 
-                    note.title.toLowerCase().includes(filter.toLowerCase()) ||
-                    note.content.toLowerCase().includes(filter.toLowerCase()) ||
-                    note.category.toLowerCase().includes(filter.toLowerCase())
-                )
-                .forEach(note => {
-                    const div = document.createElement('div');
-                    div.className = 'note-item';
-                    div.innerHTML = `
-                        <h3>${note.title} (${note.category})</h3>
-                        <p>${note.content}</p>
-                        <button onclick="editNote(${note.id})">Edit</button>
-                        <button onclick="deleteNote(${note.id})">Delete</button>
-                    `;
-                    noteList.appendChild(div);
-                });
-        }
-
-        function showEditor() {
-            document.getElementById('noteEditor').classList.remove('hidden');
-            document.getElementById('noteTitle').value = '';
-            document.getElementById('noteContent').value = '';
-            document.getElementById('noteCategory').value = '';
-            editingId = null;
-        }
-
-        function saveNote() {
-            const title = document.getElementById('noteTitle').value;
-            const content = document.getElementById('noteContent').value;
-            const category = document.getElementById('noteCategory').value || 'Uncategorized';
-
-            if (!title || !content) return alert('Please fill in title and content');
-
-            if (editingId !== null) {
-                const note = notes.find(n => n.id === editingId);
-                note.title = title;
-                note.content = content;
-                note.category = category;
-            } else {
-                notes.push({
-                    id: Date.now(),
-                    title,
-                    content,
-                    category,
-                    created: new Date().toISOString()
-                });
-            }
-
-            localStorage.setItem('notes', JSON.stringify(notes));
-            displayNotes();
-            document.getElementById('noteEditor').classList.add('hidden');
-        }
-
-        function editNote(id) {
-            const note = notes.find(n => n.id === id);
-            document.getElementById('noteTitle').value = note.title;
-            document.getElementById('noteContent').value = note.content;
-            document.getElementById('noteCategory').value = note.category;
-            document.getElementById('noteEditor').classList.remove('hidden');
-            editingId = id;
-        }
-
-        function deleteNote(id) {
-            notes = notes.filter(n => n.id !== id);
-            localStorage.setItem('notes', JSON.stringify(notes));
-            displayNotes();
-        }
-
-        function cancelEdit() {
-            document.getElementById('noteEditor').classList.add('hidden');
-            editingId = null;
-        }
-
-        function searchNotes() {
-            const searchTerm = document.getElementById('searchBar').value;
-            displayNotes(searchTerm);
-        }
-    </script>
-
-    <!-- Service Worker for Offline Support -->
-    <script>
-       if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/Pencil-Note/sw.js') // Adjust path based on your repo structure
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.log('Service Worker Error:', err));
-}
-    </script>
+  <header>
+    <h1>Goal & Habit Tracker</h1>
+    <p>Track your goals or habits to stay motivated!</p>
+  </header>
+  <main>
+    <section id="add-habit">
+      <input type="text" id="habit-input" placeholder="Enter a goal or habit..." aria-label="New habit">
+      <button id="add-btn">Add</button>
+    </section>
+    <ul id="habit-list"></ul>
+  </main>
+  <footer>
+    <p>&copy; 2025 Goal Tracker</p>
+  </footer>
+  <script src="/app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('Pencil-Note/sw.js');
+    }
+  </script>
 </body>
 </html>
