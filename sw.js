@@ -1,7 +1,7 @@
 const CACHE_NAME = 'goal-tracker-v1';
 const urlsToCache = [
   '/',
-  'Pencil-Note//index.html',
+  'Pencil-Note/index.html',
   'Pencil-Note/styles.css',
   'Pencil-Note/app.js',
   'Pencil-Note/manifest.json',
