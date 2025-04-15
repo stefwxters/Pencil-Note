@@ -6,7 +6,7 @@ const urlsToCache = [
   'app.js',
   'manifest.json',
   'icons/icon-192.png',
-  'icons/icon-512.png'
+  'icons/icon-512x512.png'
 ];
 
 // Install service worker and cache assets
